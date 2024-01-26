@@ -16,7 +16,7 @@ class CastDataSource: CastDataSourceProtocol {
     }
     
     func getCast(movieID: Int, completion: @escaping (Result<[Cast], Error>) -> Void) async {
-        let url = URL(string: networkManager.serverAddress + "/shows/\(movieID)/cast")!
+        let url = URL(string: networkManager.serverAddress + "shows/\(movieID)/cast")!
         let urlRequest = URLRequest(url: url)
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             if let data = data {

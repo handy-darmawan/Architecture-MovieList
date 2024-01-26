@@ -8,5 +8,5 @@
 import Foundation
 
 protocol MovieRepositoryProtocol {
-    func getMovie() async -> Result<[Movie], Error>
+    func getMovie(handler: @escaping (Result<[Movie], Error>) -> Void) async
 }
