@@ -19,9 +19,14 @@ class DetailViewController: UIViewController {
     private var containerView: UIView!
     private var containerViewHeight: NSLayoutConstraint!
     
+    
+    override func loadView() {
+        super.loadView()
+        setup()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
         presenter?.viewDidLoad()
     }
 }

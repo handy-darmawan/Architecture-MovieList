@@ -11,10 +11,14 @@ class HomeViewController: UIViewController {
     var presenter: HomeViewToPresenterProtocol!
     private var movieTableView: UITableView!
     
+    override func loadView() {
+        super.loadView()
+        setup()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.viewDidLoad()
-        setup()
     }
 }
 
