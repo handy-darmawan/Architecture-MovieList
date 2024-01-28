@@ -9,6 +9,8 @@ import UIKit
 import Combine
 
 class HomeViewModel {
+    enum Section { case movies }
+    
     private let fetchMovieListsUseCase: FetchMovieListsUseCase
     
     init() {

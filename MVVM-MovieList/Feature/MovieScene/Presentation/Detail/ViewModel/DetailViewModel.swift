@@ -10,14 +10,20 @@ import Combine
 
 
 class DetailViewModel {
-    private let fetchCastUseCase: FetchCastListsUseCase
     
-    init() {
-        fetchCastUseCase = FetchCastListsUseCase()
-    }
+    enum Section { case cast }
+    
+    
+    private let fetchCastUseCase: FetchCastListsUseCase
+    let movie: Movie!
     
     //MARK: - Output
     var casts = CurrentValueSubject<[Cast], Never>([])
+    
+    init(movie: Movie) {
+        self.movie = movie
+        fetchCastUseCase = FetchCastListsUseCase()
+    }
     
     func loadCast(movieID: Int) async {
         await fetchCastUseCase.execute(movieID: movieID) { result in

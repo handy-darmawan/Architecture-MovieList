@@ -7,8 +7,9 @@
 
 import UIKit
 
-struct Cast {
+struct Cast: Hashable {
     let id: Int
     let name: String
     let mediumImage: URL
+    let uuid = UUID().uuidString
 }

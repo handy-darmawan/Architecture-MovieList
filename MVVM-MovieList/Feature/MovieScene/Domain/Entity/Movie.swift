@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Movie {
+struct Movie: Hashable {
     let id: Int
     let name: String
     let type: TypeEnum
