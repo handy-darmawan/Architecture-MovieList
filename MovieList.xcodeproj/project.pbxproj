@@ -32,6 +32,7 @@
 		80028E0B2B66496500091E6A /* DescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80028DF12B66496500091E6A /* DescriptionView.swift */; };
 		80028E0C2B66496500091E6A /* DetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80028DF22B66496500091E6A /* DetailRouter.swift */; };
 		80028E0D2B66496500091E6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80028DF32B66496500091E6A /* AppDelegate.swift */; };
+		80028E102B664EF400091E6A /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 80028E0F2B664EF400091E6A /* readme.md */; };
 		80C4E95D2B64B89C0055D938 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 80C4E95C2B64B89C0055D938 /* SDWebImage */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		80028DF12B66496500091E6A /* DescriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionView.swift; sourceTree = "<group>"; };
 		80028DF22B66496500091E6A /* DetailRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailRouter.swift; sourceTree = "<group>"; };
 		80028DF32B66496500091E6A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		80028E0F2B664EF400091E6A /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		809854482B60F324002BF40F /* MovieList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -196,6 +198,7 @@
 		8098543F2B60F324002BF40F = {
 			isa = PBXGroup;
 			children = (
+				80028E0F2B664EF400091E6A /* readme.md */,
 				8098544A2B60F324002BF40F /* MovieList */,
 				809854492B60F324002BF40F /* Products */,
 			);
@@ -284,6 +287,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80028E102B664EF400091E6A /* readme.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
