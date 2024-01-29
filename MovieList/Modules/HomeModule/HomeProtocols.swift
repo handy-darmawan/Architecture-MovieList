@@ -13,9 +13,8 @@ protocol HomeViewToPresenterProtocol {
     var router: HomePresenterToRouterProtocol? { get set }
     
     func viewDidLoad()
-    func getTotalMovies() -> Int
-    func getMovies(with index: Int) -> Movie
     func onTappedMovie(with index: Int)
+    func getMovies() -> [Movie]
 }
 
 protocol HomePresenterToViewProtocol: AnyObject {

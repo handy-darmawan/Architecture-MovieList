@@ -7,11 +7,12 @@
 
 import Foundation
 
-struct Cast: Codable {
+struct Cast: Codable, Hashable {
     let person: Person
+    let uuid = UUID().uuidString
 }
 
-struct Person: Codable {
+struct Person: Codable, Hashable {
     let id: Int
     let name: String
     let image: Image

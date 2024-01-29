@@ -13,8 +13,7 @@ protocol DetailViewToPresenterProtocol: AnyObject {
     var router: DetailPresenterToRouterProtocol? { get set }
     
     func viewDidLoad()
-    func getTotalCasts() -> Int
-    func getCast(with index: Int) -> Cast
+    func getCasts() -> [Cast]
 }
 
 protocol DetailPresenterToViewProtocol: AnyObject {

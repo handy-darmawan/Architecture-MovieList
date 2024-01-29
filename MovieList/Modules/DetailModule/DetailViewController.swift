@@ -11,6 +11,7 @@ import SDWebImage
 class DetailViewController: UIViewController {
     var presenter: DetailViewToPresenterProtocol!
     
+    //MARK: Subviews
     private var movieImageView: UIImageView!
     private var descriptionView: DescriptionView!
     private var showInfoView: ShowInfoView!
@@ -19,10 +20,16 @@ class DetailViewController: UIViewController {
     private var containerView: UIView!
     private var containerViewHeight: NSLayoutConstraint!
     
+    //MARK: Data source
+    enum Section { case cast }
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Cast>!
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, Cast>!
+    
     
     override func loadView() {
         super.loadView()
         setup()
+        configureDataSource()
     }
     
     override func viewDidLoad() {
@@ -34,7 +41,7 @@ class DetailViewController: UIViewController {
 //MARK: Protocols
 extension DetailViewController: DetailPresenterToViewProtocol {
     func fetchedCast() {
-        castView.reloadData()
+        updateSections()
     }
     
     func fetchedMovie(_ movie: Movie) {
@@ -48,19 +55,29 @@ extension DetailViewController: DetailPresenterToViewProtocol {
 
 //MARK: Actions
 extension DetailViewController {
-    func getCastCount() -> Int {
-        presenter.getTotalCasts()
-    }
-    
-    func getCast(_ index: Int) -> Cast {
-        presenter.getCast(with: index)
+    func updateSections() {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Cast>()
+        snapshot.appendSections([.cast])
+        snapshot.appendItems(presenter.getCasts())
+        dataSource.apply(snapshot)
     }
 }
 
 
+//MARK: - Data Source
+extension DetailViewController {
+    func configureDataSource() {
+        dataSource = .init(collectionView: castView.castCollection, cellProvider: { collectionView, indexPath, cast in
+            let cell = self.castView.castCollection.dequeueReusableCell(withReuseIdentifier: CastCell.reuseID, for: indexPath) as! CastCell
+            cell.setParameters(with: cast)
+            return cell
+        })
+    }
+}
+
 
 //MARK: Setups
-private extension DetailViewController {
+extension DetailViewController {
     func setup() {
         view.backgroundColor = .white
         overrideUserInterfaceStyle = .light
@@ -142,7 +159,7 @@ private extension DetailViewController {
     }
     
     func setupCastView() {
-        castView = CastView(frame: .zero, getCastCount: getCastCount, getCast: getCast(_:))
+        castView = CastView(frame: .zero)
         castView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(castView)
         

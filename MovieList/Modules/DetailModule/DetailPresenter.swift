@@ -18,12 +18,8 @@ class DetailPresenter: DetailViewToPresenterProtocol {
         interactor?.fetchCast()
     }
     
-    func getTotalCasts() -> Int {
-        casts.count
-    }
-    
-    func getCast(with index: Int) -> Cast {
-        casts[index]
+    func getCasts() -> [Cast] {
+        return casts
     }
 }
 

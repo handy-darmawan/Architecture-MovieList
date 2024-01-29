@@ -19,16 +19,12 @@ class HomePresenter: HomeViewToPresenterProtocol {
         interactor?.fetchMovies()
     }
     
-    func getTotalMovies() -> Int {
-        movies.count
-    }
-    
-    func getMovies(with index: Int) -> Movie {
-        movies[index]
-    }
-    
     func onTappedMovie(with index: Int) {
         router?.pushToDetailScreen(from: view!, with: movies[index])
+    }
+    
+    func getMovies() -> [Movie] {
+        return movies
     }
 }
 

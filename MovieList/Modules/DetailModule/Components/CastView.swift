@@ -9,13 +9,9 @@ import UIKit
 
 class CastView: UIView {
     private var titleLabel: UILabel!
-    private var castCollection: UICollectionView!
-    var getCastCount: () -> Int
-    var getCast: (Int) -> Cast
+    var castCollection: UICollectionView!
     
-    init(frame: CGRect, getCastCount: @escaping () -> Int, getCast: @escaping (Int) -> Cast) {
-        self.getCastCount = getCastCount
-        self.getCast = getCast
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
@@ -25,35 +21,8 @@ class CastView: UIView {
     }
 }
 
-
-//MARK: Actions {
-extension CastView {
-    func reloadData() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            castCollection.reloadData()
-        }
-    }
-}
-
-
 //MARK: Collection Delegate
-extension CastView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        getCastCount()
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = castCollection.dequeueReusableCell(withReuseIdentifier: CastCell.reuseID, for: indexPath) as! CastCell
-        let cast = getCast(indexPath.row)
-        cell.setParameters(with: cast)
-        return cell
-    }
-    
+extension CastView: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: 80, height: 130)
     }
@@ -91,7 +60,6 @@ private extension CastView {
         castCollection.backgroundColor = .clear
         castCollection.showsHorizontalScrollIndicator = false
         castCollection.register(CastCell.self, forCellWithReuseIdentifier: CastCell.reuseID)
-        castCollection.dataSource = self
         castCollection.delegate = self
         self.addSubview(castCollection)
         

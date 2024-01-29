@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Movie: Codable {
+struct Movie: Codable, Hashable {
     let id: Int
     let name: String
     let type: TypeEnum
@@ -20,16 +20,16 @@ struct Movie: Codable {
     let image: Image    
 }
 
-struct Rating: Codable {
+struct Rating: Codable, Hashable {
     let average: Double?
 }
 
-struct Schedule: Codable {
+struct Schedule: Codable, Hashable {
     let time: Time
     let days: [Day]
 }
 
-struct Image: Codable {
+struct Image: Codable, Hashable {
     let medium: String
     let original: String
 }

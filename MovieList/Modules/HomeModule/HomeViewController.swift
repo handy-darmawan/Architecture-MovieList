@@ -8,12 +8,19 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    
     var presenter: HomeViewToPresenterProtocol!
     private var movieTableView: UITableView!
+    
+    //MARK: Data source
+    enum Section { case movie }
+    private var dataSource: UITableViewDiffableDataSource<Section, Movie>!
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, Movie>!
     
     override func loadView() {
         super.loadView()
         setup()
+        configureDataSource()
     }
     
     override func viewDidLoad() {
@@ -26,33 +33,40 @@ class HomeViewController: UIViewController {
 //MARK: Protocols
 extension HomeViewController: HomePresenterToViewProtocol {
     func fetchedMovies() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            movieTableView.reloadData()
-        }
+        //update the snapshot
+        updateSections()
+    }
+}
+
+
+//MARK: - Actions
+private extension HomeViewController {
+    func updateSections() {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
+        snapshot.appendSections([.movie])
+        snapshot.appendItems(presenter.getMovies())
+        dataSource.apply(snapshot)
+    }
+}
+
+
+//MARK: - Data Source
+private extension HomeViewController {
+    func configureDataSource() {
+        dataSource = .init(tableView: movieTableView, cellProvider: { tableView, indexPath, movie in
+            let cell = tableView.dequeueReusableCell(withIdentifier: MovieCell.reuseID, for: indexPath) as! MovieCell
+            cell.setCellParamsFor(movie)
+            return cell
+        })
     }
 }
 
 
 //MARK: - Table View Delegate
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.getTotalMovies()
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MovieCell.reuseID, for: indexPath) as! MovieCell
-        let movie = presenter.getMovies(with: indexPath.row)
-        cell.setCellParamsFor(movie)
-        return cell
-    }
-    
+extension HomeViewController: UITableViewDelegate {
+  
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         90
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        1
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -73,9 +87,7 @@ extension HomeViewController {
         movieTableView = UITableView()
         movieTableView.translatesAutoresizingMaskIntoConstraints = false
         movieTableView.delegate = self
-        movieTableView.dataSource = self
         movieTableView.backgroundColor = .clear
-        
         movieTableView.register(MovieCell.self, forCellReuseIdentifier: MovieCell.reuseID)
         view.addSubview(movieTableView)
         
