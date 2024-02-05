@@ -8,8 +8,8 @@
 import UIKit
 
 class DescriptionView: UIView {
-    private var titleLabel: UILabel!
-    private var summaryLabel: UILabel!
+    private(set) var titleLabel: UILabel!
+    private(set) var summaryLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

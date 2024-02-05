@@ -12,10 +12,10 @@ class DetailViewController: UIViewController {
     var presenter: DetailViewToPresenterProtocol!
     
     //MARK: Subviews
-    private var movieImageView: UIImageView!
-    private var descriptionView: DescriptionView!
-    private var showInfoView: ShowInfoView!
-    private var castView: CastView!
+    private(set) var movieImageView: UIImageView!
+    private(set) var descriptionView: DescriptionView!
+    private(set) var showInfoView: ShowInfoView!
+    private(set) var castView: CastView!
     private var scrollView: UIScrollView!
     private var containerView: UIView!
     private var containerViewHeight: NSLayoutConstraint!
@@ -24,7 +24,6 @@ class DetailViewController: UIViewController {
     enum Section { case cast }
     private var dataSource: UICollectionViewDiffableDataSource<Section, Cast>!
     private var snapshot: NSDiffableDataSourceSnapshot<Section, Cast>!
-    
     
     override func loadView() {
         super.loadView()
@@ -54,7 +53,7 @@ extension DetailViewController: DetailPresenterToViewProtocol {
 
 
 //MARK: Actions
-extension DetailViewController {
+private extension DetailViewController {
     func updateSections() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Cast>()
         snapshot.appendSections([.cast])
@@ -65,7 +64,7 @@ extension DetailViewController {
 
 
 //MARK: - Data Source
-extension DetailViewController {
+private extension DetailViewController {
     func configureDataSource() {
         dataSource = .init(collectionView: castView.castCollection, cellProvider: { collectionView, indexPath, cast in
             let cell = self.castView.castCollection.dequeueReusableCell(withReuseIdentifier: CastCell.reuseID, for: indexPath) as! CastCell
@@ -77,7 +76,7 @@ extension DetailViewController {
 
 
 //MARK: Setups
-extension DetailViewController {
+private extension DetailViewController {
     func setup() {
         view.backgroundColor = .white
         overrideUserInterfaceStyle = .light

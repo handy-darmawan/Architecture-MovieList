@@ -8,13 +8,13 @@
 import UIKit
 
 class ShowInfoView: UIView {
-    private var titleLabel: UILabel!
+    private(set) var titleLabel: UILabel!
     private var containerView: UIView!
-    private var scheduleLabel: UILabel!
-    private var statusLabel: UILabel!
-    private var typeLabel: UILabel!
-    private var genreLabel: UILabel!
-    private var ratingView: RatingView!
+    private(set) var scheduleLabel: UILabel!
+    private(set) var statusLabel: UILabel!
+    private(set) var typeLabel: UILabel!
+    private(set) var genreLabel: UILabel!
+    private(set) var ratingView: RatingView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -10,7 +10,8 @@ import UIKit
 class DetailInteractor: DetailPresenterToInteractorProtocol {
     weak var presenter: DetailInteractorToPresenterProtocol?
     var castService: CastService
-    var movie: Movie
+    private var movie: Movie
+    private var casts: [Cast] = []
     
     init(for movie: Movie) {
         self.movie = movie
@@ -19,8 +20,10 @@ class DetailInteractor: DetailPresenterToInteractorProtocol {
     
     func fetchCast() {
         Task {
-            await castService.fetchCast(id: movie.id) { casts in
-                self.presenter?.fetchedCast(casts)
+            await castService.fetchCast(id: movie.id) { [weak self] casts in
+                guard let self = self else { return }
+                self.casts = casts
+                presenter?.fetchedCast(casts)
             }
         }
     }
@@ -28,5 +31,4 @@ class DetailInteractor: DetailPresenterToInteractorProtocol {
     func fetchMovie() {
         presenter?.fetchedMovie(movie)
     }
-    
 }
