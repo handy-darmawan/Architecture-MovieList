@@ -10,12 +10,12 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var presenter: HomeViewToPresenterProtocol!
-    private var movieTableView: UITableView!
+    private(set) var movieTableView: UITableView!
     
     //MARK: Data source
     enum Section { case movie }
     private var dataSource: UITableViewDiffableDataSource<Section, Movie>!
-    private var snapshot: NSDiffableDataSourceSnapshot<Section, Movie>!
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, Movie> = NSDiffableDataSourceSnapshot<Section, Movie>()
     
     override func loadView() {
         super.loadView()
@@ -40,12 +40,12 @@ extension HomeViewController: HomePresenterToViewProtocol {
 
 
 //MARK: - Actions
-private extension HomeViewController {
+extension HomeViewController {
     func updateSections() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
         snapshot.appendSections([.movie])
         snapshot.appendItems(presenter.getMovies())
-        dataSource.apply(snapshot)
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
@@ -75,7 +75,7 @@ extension HomeViewController: UITableViewDelegate {
 }
 
 //MARK: Setups
-extension HomeViewController {
+private extension HomeViewController {
     func setup() {
         view.backgroundColor = .white
         overrideUserInterfaceStyle = .light

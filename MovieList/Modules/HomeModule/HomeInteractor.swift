@@ -10,6 +10,7 @@ import Foundation
 class HomeInteractor: HomePresenterToInteractorProtocol {
     weak var presenter: HomeInteractorToPresenterProtocol?
     var movieService: MovieService
+    var movies: [Movie] = []
     
     init() {
         self.movieService = MovieService()
@@ -17,8 +18,11 @@ class HomeInteractor: HomePresenterToInteractorProtocol {
     
     func fetchMovies() {
         Task {
-            await movieService.fetchMovies { movies in
-                self.presenter?.fetchedMovies(movies)
+            await movieService.fetchMovies { [weak self] movies in
+                guard let self = self else { return }
+                
+                self.movies = movies
+                presenter?.fetchedMovies(movies)
             }
         }
     }
